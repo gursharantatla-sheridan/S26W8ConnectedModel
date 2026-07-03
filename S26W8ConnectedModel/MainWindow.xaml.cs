@@ -72,5 +72,19 @@ namespace S26W8ConnectedModel
                 grdEmployees.ItemsSource = tbl.DefaultView;
             }
         }
+
+        private void btnCount_Click(object sender, RoutedEventArgs e)
+        {
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                string query = "select Count(*) from Employees";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                conn.Open();
+
+                int rows = (int)cmd.ExecuteScalar();
+                MessageBox.Show("Total rows = " + rows);
+            }
+        }
     }
 }
