@@ -52,7 +52,25 @@ namespace S26W8ConnectedModel
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                // string concatenation - NO
+                //string query = "select * from Employees where FirstName='" + txtFirstname.Text + "'";
 
+                // command parameters / paramaterized query - YES
+                string query = "select * from Employees where FirstName=@fn";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("fn", txtFirstname.Text);
+
+                conn.Open();
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                DataTable tbl = new DataTable();
+                tbl.Load(reader);
+                grdEmployees.ItemsSource = tbl.DefaultView;
+            }
         }
     }
 }
