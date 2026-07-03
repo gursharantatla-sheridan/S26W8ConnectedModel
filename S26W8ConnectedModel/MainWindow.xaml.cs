@@ -102,6 +102,7 @@ namespace S26W8ConnectedModel
 
                 if (result == 1)
                 {
+                    LoadData();
                     MessageBox.Show("New employee added");
                 }
                 else
